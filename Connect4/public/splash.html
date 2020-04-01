@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Connect 4 - Home</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/splash.css">
+<link href="https://github.com/aakanksha991/Funnl/tree/master/app/fonts/HP-Simplified/HPSimplifiedW01-Bold.ttf" rel="stylesheet">
+</head>	
+	
+<body>
+	<section id="globalstats">
+		<p>Online players: <span id="stat1">2</span><br>
+		Games played: <span id="stat2">10</span><br>
+		Current matches: <span id="stat3"></span>
+		</p>
+	</section>
+	
+	<section id="home">
+		<div>
+			<img id="logohome" src="images/logo.png" alt="logo">
+		</div>
+		<div id="gamemodes">
+			<!-- Here a submit type element is needed-->
+			<!--<a href="game.html"><img id="playonline" src="images/icon2.png" alt="playonline"></a>-->
+			<form action="game">
+				<input type="image"  id="playonline" src="images/icon2.png" alt="playonline"></input>
+			</form>
+			<form action="singleplayer">
+				<input type="image"  id="playcomputer" src="images/icon1.png" alt="playcomputer"></input>
+			</form>			
+			<!--<a href="game.html"><img id="playcomputer" src="images/icon1.png" alt="playcomputer"></a>-->
+		</div>
+	</section>
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="javascripts/splash.js"></script>
+</body>
+</html>

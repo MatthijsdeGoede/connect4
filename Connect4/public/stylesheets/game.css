@@ -1,0 +1,242 @@
+/* CSS Document */
+:root {
+	--red-color: #FF0000;
+	--yellow-color: #FFCC00;
+	--light-background-color: #23779B;
+	--dark-background-color: #35363A; 
+}
+
+body {
+	background-color: var(--light-background-color);
+	color: white;
+	font-family: HP Simplified;
+	font-size: 20px;
+	text-align: center;
+}
+
+h1, h2 {
+	margin: 20px;
+	white-space: nowrap;
+	font-weight: normal;
+}
+
+h1{
+	font-size: 100px;
+}
+
+h2 {
+	font-size: 60px;
+}
+
+button {
+	padding: 15px 40px;
+	font-size: 40px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+	background-color: var(--yellow-color);
+	border: none;
+	color: white;
+	font-family: HP Simplified;
+	display: block;
+}
+
+section:not(#gamestats){
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+button:hover, button:active {
+	opacity: 90%;
+}
+
+.buttonsmall {
+	float: right;
+	width: 60px;
+	height: 60px;
+	margin-left: 7px;
+	margin-top: 15px;
+}
+
+.buttonbig{
+	width: 200px;
+	height: 200px;
+	margin-top: 15px;
+	margin-right: 25px;
+}
+
+#exit{
+	margin-right: 15px;
+}
+
+#gamestats{
+	float: left;
+	margin-left: 15px;
+	margin-top: 15px;
+}
+
+.buttonsmall:hover, .buttonbig:hover {
+	opacity: 90%;	
+}
+
+#gametime::before {
+	content: "Game time: ";
+}
+
+#logofooter{
+	position: fixed;
+	right:0;
+	bottom:0;
+	width: 250px;
+	height: 50px;
+	margin-right: 15px;
+	margin-bottom: 15px;	
+}
+
+table tr td{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: white;
+	display: inline-block;
+	margin: 5px;
+}
+
+table tr {
+	white-space: nowrap;	
+}
+
+#gamegrid{
+	z-index: -1;
+	display: inline-block;
+}
+
+#transit{
+	color: var(--yellow-color);
+	transition: color 2s;
+}
+
+#transit:hover{
+	color: var(--red-color);
+}
+
+.yellowcolor, #animated2{
+	color: var(--yellow-color);
+}
+
+.redcolor, #animated3{
+	color: var(--red-color);
+}
+
+input[type="text"] {
+    width: 500px;
+    height: 40px;
+    font-family: HP Simplified;
+    font-size: 25px;
+    color: gray;
+}
+
+#waitingtime{
+    position: relative;
+    top: -15px;
+    font-size: 60px;
+    width: 100%;
+}
+
+#players{
+	text-align: left;
+}
+
+#enter-nickname label{
+    position:relative;
+    display: block;
+    top:-15px;
+	width: 100%;
+}
+
+#animated1, #animated2, #animated3 {
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+#animated1 {
+	animation-name: animation1;
+}
+
+#animated2 {
+	animation-name: animation2;
+}
+
+#animated3 {
+	animation-name: animation3;
+}
+
+@keyframes animation1 {
+	from, 33% {
+	  color: white;
+	}
+
+	33.3%, 66% {
+		color: var(--red-color);
+	}
+
+	66.7%, 99%  {
+		color: var(--yellow-color);
+	}
+
+	to{
+		color: white;
+	}
+  }
+
+  @keyframes animation2 {
+	from, 33% {
+		color: var(--yellow-color);
+	}
+
+	33.3%, 66%{
+		color: white;
+	}
+
+	66.7%, 99% {
+		color: var(--red-color);
+	}
+
+	to{
+		color: var(--yellow-color);
+	}
+  }
+
+  @keyframes animation3 {
+	from, 33% {
+		color: var(--red-color);
+	}
+
+	33.3%, 66%{
+		color: var(--yellow-color);
+	}
+
+	66.6%, 99%   {
+		color: white;
+	}
+
+	to{
+		color: var(--red-color);
+	}
+  }
+
+  @media (prefers-color-scheme: dark) {
+	body {
+	  background-color: var(--dark-background-color);
+	}
+  }
+  
+  @media (prefers-color-scheme: light) {
+	body{
+	  background-color: var(--light-background-color);
+	}
+  }

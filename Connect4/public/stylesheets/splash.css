@@ -1,0 +1,66 @@
+/* CSS Document */
+:root {
+	--light-background-color: #23779B;
+	--dark-background-color: #35363A; 
+}
+
+body {
+	background-color:  #23779B;
+	color: white;
+	font-family: HP Simplified;
+	font-size: 20px;
+}
+
+p{
+	margin: 0px;
+}
+
+#home{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#globalstats{
+	float: left;
+	margin-left: 15px;
+	margin-top: 15px;
+}
+
+#playonline, #playcomputer {
+	width: 150px;
+	height: 155px;
+	margin-left: 25px;
+	margin-top: 50px;
+}
+
+#playonline:hover, #playcomputer:hover {
+	opacity: 90%;	
+}
+
+#logohome{
+	width: 700px;
+	height: 141px;
+}
+
+#gamemodes{
+	position: relative;
+	transform: translateX(25%);
+}
+
+form{
+	display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+	  background-color: #35363A;
+	}
+  }
+  
+  @media (prefers-color-scheme: light) {
+	body{
+	  background-color: #23779B;
+	}
+  }

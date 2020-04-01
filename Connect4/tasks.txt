@@ -1,0 +1,18 @@
+Ada: Part 3 - Node.js and websocket
+Matthijs: html, css, javascript 
+Ada: Nickname and waiting screen connected
+Matthijs: Press Start and game screen connected
+
+CSS: ::after use for the colored circles after the player names;
+padding 
+css animation for clock and dots while waiting
+css transition for game over screen
+
+Ada: media query splash screen resolution
+
+Matthijs: fullscreen mode, slider; transition for game over.
+
+Cookie, based on this the startscreen is only shown to new players.
+
+
+Ada: pass the name from the field to the game?

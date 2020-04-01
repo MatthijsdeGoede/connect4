@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Connect 4 - Play</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/game.css">
+<link href="https://github.com/aakanksha991/Funnl/tree/master/app/fonts/HP-Simplified/HPSimplifiedW01-Bold.ttf" rel="stylesheet">	
+</head>
+<body>
+    <header>
+        <form action="/">
+            <input type="image" id="exit" class="buttonsmall" src="images/icon4.png" alt="exit"></input>
+            <input type="image" id="replay" class="buttonsmall" src="images/icon3.png" style="display: none;" alt="replay"></input>
+        </form>
+    </header>
+
+	<section id="gamestats">
+        <div id="players" style="display: none;"></div>
+        <div id="gametime" style="display: none;"></div>
+    </section>
+    
+    <section id="startscreen" style="display: none;">
+        <h2>Click the cell to conquer when it's <span class="yellowcolor">your </span>turn</h2>
+        <button onclick="start()">START</button>
+    </section>
+
+    <section id="enter-nickname">
+        <label for="nickname"><h2>Enter <span class="yellowcolor">your</span> nickname:</h2></label>
+        <input id="nickname" type="text"></input>
+        <button onclick="sendNickname()">SEND</button>
+    </section>
+
+    <section id="waiting-wrapper" style="display: none;">
+        <h2>Waiting for other players<span id=animated1>.</span><span id=animated2>.</span><span id=animated3>.</span></h2>
+        <h2 id=waitingtime>
+           00:00
+        </h2>
+    </section>
+
+    <section id="endscreen" style="display: none;">
+        <h1 id="winnerText"></h1>
+        <form action="/">
+            <input type="image" id="exit" class="buttonbig" src="images/icon4.png" alt="exit"></input>
+            <input type="image" id="replay" class="buttonbig" src="images/icon3.png" alt="replay"></input>
+        </form>
+    </section>
+	
+	<section id="gamegrid" style="display: none;">
+		<h2 id="player-turn"></h2>
+		
+		<table>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+		</table>
+    </section>
+    		
+	<footer>
+		<div>
+			<img id="logofooter" src="images/logo.png" alt="logo">
+		</div>	
+    </footer>    
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="javascripts/messages.js"></script>
+    <script src="javascripts/game.js"></script>
+</body>
+</html>
+
