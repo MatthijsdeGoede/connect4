@@ -81,7 +81,8 @@ function sendNickname(){
     
     var outgoingMsg = Messages.O_NICKNAME;
     outgoingMsg.nickname = myName;
-    gs.socket.send(JSON.stringify(outgoingMsg));
+    alert("This works");
+	gs.socket.send(JSON.stringify(outgoingMsg));
     waitingForPlayers();
 }
 
@@ -313,7 +314,6 @@ function timer(){
 
 //method is never excecuted
 (function setup() {
-	alert("Test");
     var HOST = location.origin.replace(/^http/, 'ws')
 	var socket = new WebSocket(HOST);
     
