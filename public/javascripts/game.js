@@ -77,7 +77,6 @@ function getColorClass(id){
 }
 
 function sendNickname(){
-	alert("Clicking goes fine");
     myName = document.getElementById("nickname").value;
     
     var outgoingMsg = Messages.O_NICKNAME;
@@ -315,11 +314,13 @@ function timer(){
 (function setup() {
     var HOST = location.origin.replace(/^http/, 'ws')
 	var socket = new WebSocket(HOST);
+	alert("WebSocket set up");
     
 	gs = new GameState();
     gs.socket = socket;
 
     socket.onmessage = function(event) {
+	  alert("Message received");
       let incomingMsg = JSON.parse(event.data);
   
       if(incomingMsg.type == Messages.T_READY_TO_START){
