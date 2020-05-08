@@ -19,7 +19,6 @@ var movesound = new Audio("../data/pop.mp3");
 var combination = [];
 var time = 0;
 
-//method is never excecuted
 (function setup() {
     var HOST = location.origin.replace(/^http/, 'ws')
 	var socket = new WebSocket(HOST);
