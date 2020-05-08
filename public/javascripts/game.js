@@ -81,7 +81,6 @@ function sendNickname(){
     
     var outgoingMsg = Messages.O_NICKNAME;
     outgoingMsg.nickname = myName;
-    alert("This works");
 	gs.socket.send(JSON.stringify(outgoingMsg));
     waitingForPlayers();
 }
@@ -363,6 +362,9 @@ function timer(){
         }
     };
   
-    socket.onerror = function() {};
+	socket.onerror = function(event) {
+	  console.error("WebSocket error observed:", event);
+	  alert(event); 
+	};
   })();
 
