@@ -19,6 +19,62 @@ var movesound = new Audio("../data/pop.mp3");
 var combination = [];
 var time = 0;
 
+//method is never excecuted
+(function setup() {
+    var HOST = location.origin.replace(/^http/, 'ws')
+	var socket = new WebSocket(HOST);
+    
+	gs = new GameState();
+    gs.socket = socket;
+
+    socket.onmessage = function(event) {
+      let incomingMsg = JSON.parse(event.data);
+  
+      if(incomingMsg.type == Messages.T_READY_TO_START){
+
+        gs.gameStarted = true;
+        gs.opponent = incomingMsg.opponentName;
+        gs.playerType = incomingMsg.data;
+        gs.currentPlayer = incomingMsg.startingPlayer;
+        startscreen();        
+      }
+
+      if(incomingMsg.type == Messages.A_TURN){
+        gs.currentPlayer = 0;
+        updateTurnInfo();
+      }
+
+      if(incomingMsg.type == Messages.B_TURN){
+        gs.currentPlayer = 1;
+        updateTurnInfo();
+      }
+
+      if(incomingMsg.type == Messages.T_MOVE_COMPLETED || incomingMsg.type == Messages.T_DRAW || incomingMsg.type == Messages.T_GAME_FINISHED){
+        changeColorHelper(tableRow[incomingMsg.row].children[incomingMsg.column], incomingMsg.sender);
+      }
+
+      if(incomingMsg.type == Messages.T_DRAW || incomingMsg.type == Messages.T_GAME_FINISHED){
+        gs.gameOver = true;
+      }
+
+      if(incomingMsg.type == Messages.T_GAME_ABORTED){
+        fadeOut("Game <span class='redcolor'>aborted</span>!");
+        gs.gameOver = true;
+      }
+    };
+
+    socket.onclose = function() {
+        if(!gs.gameOver){
+            fadeOut("Game <span class='redcolor'>aborted</span>!");
+            gs.gameOver = true;
+        }
+    };
+  
+	socket.onerror = function(event) {
+	  console.error("WebSocket error observed:", event);
+	};
+  })();
+
 window.addEventListener("resize", function(){
     if (window.matchMedia('(max-width: 700px)').matches) {
     alert("The width of the screen is too small for optimal play");
@@ -310,61 +366,3 @@ function timer(){
         }
     },100);
 }
-
-//method is never excecuted
-(function setup() {
-    var HOST = location.origin.replace(/^http/, 'ws')
-	var socket = new WebSocket(HOST);
-    
-	gs = new GameState();
-    gs.socket = socket;
-
-    socket.onmessage = function(event) {
-      let incomingMsg = JSON.parse(event.data);
-  
-      if(incomingMsg.type == Messages.T_READY_TO_START){
-
-        gs.gameStarted = true;
-        gs.opponent = incomingMsg.opponentName;
-        gs.playerType = incomingMsg.data;
-        gs.currentPlayer = incomingMsg.startingPlayer;
-        startscreen();        
-      }
-
-      if(incomingMsg.type == Messages.A_TURN){
-        gs.currentPlayer = 0;
-        updateTurnInfo();
-      }
-
-      if(incomingMsg.type == Messages.B_TURN){
-        gs.currentPlayer = 1;
-        updateTurnInfo();
-      }
-
-      if(incomingMsg.type == Messages.T_MOVE_COMPLETED || incomingMsg.type == Messages.T_DRAW || incomingMsg.type == Messages.T_GAME_FINISHED){
-        changeColorHelper(tableRow[incomingMsg.row].children[incomingMsg.column], incomingMsg.sender);
-      }
-
-      if(incomingMsg.type == Messages.T_DRAW || incomingMsg.type == Messages.T_GAME_FINISHED){
-        gs.gameOver = true;
-      }
-
-      if(incomingMsg.type == Messages.T_GAME_ABORTED){
-        fadeOut("Game <span class='redcolor'>aborted</span>!");
-        gs.gameOver = true;
-      }
-    };
-
-    socket.onclose = function() {
-        if(!gs.gameOver){
-            fadeOut("Game <span class='redcolor'>aborted</span>!");
-            gs.gameOver = true;
-        }
-    };
-  
-	socket.onerror = function(event) {
-	  console.error("WebSocket error observed:", event);
-	  alert(event); 
-	};
-  })();
-
