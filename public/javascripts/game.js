@@ -155,7 +155,7 @@ function sendNickname(retrieveFromInput){
         let date = new Date(Date.now() + 86400e3);
         date = date.toUTCString();
         myName = document.getElementById("nickname").value;
-        document.cookie = "nickname=1" + myName + "; expires=" + date;
+        document.cookie = "nickname=" + myName + "; expires=" + date;
     }
 
     var outgoingMsg = Messages.O_NICKNAME;
