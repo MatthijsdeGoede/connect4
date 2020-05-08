@@ -11,7 +11,7 @@ var http = require("http");
 var game = require('./gameHandler');
 var messages = require("./public/javascripts/messages");
 
-var port = process.argv[2];
+var port = process.env.PORT || 3000
 var app = express();
 var server = http.createServer(app);
 const wss = new websocket.Server({ server });
