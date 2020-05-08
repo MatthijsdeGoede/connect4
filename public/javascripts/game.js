@@ -71,7 +71,9 @@ var time = 0;
   
 	socket.onerror = function(event) {
 	  console.error("WebSocket error observed:", event);
-	};
+    };
+    
+    checkNickNameCookie();
   })();
 
 window.addEventListener("resize", function(){
@@ -131,9 +133,29 @@ function getColorClass(id){
     }
 }
 
-function sendNickname(){
-    myName = document.getElementById("nickname").value;
-    
+function checkNickNameCookie(){
+    var cookiesArray = document.cookie.split('; ');
+    var cookies=[];
+
+    for(var i=0; i < cookiesArray.length; i++) {
+        var cookie = cookiesArray[i].split("=");
+        cookies[cookie[0]]=cookie[1];
+    }
+
+    if(cookiesArray.length>0 && cookies["nickname"] != null){
+        myName = cookies["nickname"];
+        sendNickname(false);        
+    }
+}
+
+function sendNickname(retrieveFromInput){
+    if(retrieveFromInput){
+        let date = new Date(Date.now() + 86400e3);
+        date = date.toUTCString();
+        myName = document.getElementById("nickname").value;
+        document.cookie = "nickname=1" + myName + "; expires=" + date;
+    }
+
     var outgoingMsg = Messages.O_NICKNAME;
     outgoingMsg.nickname = myName;
 	gs.socket.send(JSON.stringify(outgoingMsg));
