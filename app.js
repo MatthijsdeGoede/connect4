@@ -225,5 +225,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-server.listen(3000);
+server..listen(process.env.PORT || 3000);
 module.exports = app;
