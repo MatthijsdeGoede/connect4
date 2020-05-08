@@ -62,6 +62,10 @@ var time = 0;
       }
     };
 
+    socket.onopen = function (){
+        checkNickNameCookie();
+    }
+
     socket.onclose = function() {
         if(!gs.gameOver){
             fadeOut("Game <span class='redcolor'>aborted</span>!");
@@ -72,8 +76,6 @@ var time = 0;
 	socket.onerror = function(event) {
 	  console.error("WebSocket error observed:", event);
     };
-    
-    checkNickNameCookie();
   })();
 
 window.addEventListener("resize", function(){
