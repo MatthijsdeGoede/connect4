@@ -312,7 +312,7 @@ function timer(){
 }
 
 (function setup() {
-    var socket = new WebSocket("ws://localhost:3000");  
+    var socket = new WebSocket("ws://cseconnect4.herokuapp.com");  
     gs = new GameState();
     gs.socket = socket;
 
