@@ -77,6 +77,7 @@ function getColorClass(id){
 }
 
 function sendNickname(){
+	alert("Clicking goes fine");
     myName = document.getElementById("nickname").value;
     
     var outgoingMsg = Messages.O_NICKNAME;
