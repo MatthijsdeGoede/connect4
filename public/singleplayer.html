@@ -10,18 +10,103 @@
     <header>
         <form action="/">
             <input type="image" id="exit" class="buttonsmall" src="images/icon4.png" alt="exit"></input>
+            <input type="image" id="replay" class="buttonsmall" src="images/icon3.png" style="display: none;" alt="replay"></input>
         </form>
     </header>
 
-    <section id="to-be-implemented">
-        <h2>This game feature is <span id="transit">under construction!</span</h2>
+	<section id="gamestats">
+        <div id="players" style="display: none;"></div>
+        <div id="gametime" style="display: none;"></div>
+    </section>
+    
+    <section id="startscreen" style="display: none;">
+        <h2>Click the cell to conquer when it's <span class="yellowcolor">your </span>turn</h2>
+        <button onclick="start()">START</button>
     </section>
 
+    <section id="enter-nickname">
+        <label for="nickname"><h2>Enter <span class="yellowcolor">your</span> nickname:</h2></label>
+        <input id="nickname" type="text"></input>
+        <button onclick="sendNickname(true)">SEND</button>
+    </section>
+
+    <section id="endscreen" style="display: none;">
+        <h1 id="winnerText"></h1>
+        <form action="/">
+            <input type="image" id="exit" class="buttonbig" src="images/icon4.png" alt="exit"></input>
+            <input type="image" id="replay" class="buttonbig" src="images/icon3.png" alt="replay"></input>
+        </form>
+    </section>
+	
+	<section id="gamegrid" style="display: none;">
+		<h2 id="player-turn"></h2>
+		
+		<table>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+        <tr>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+            <td class="cell"></td>
+        </tr>
+		</table>
+    </section>
+    		
 	<footer>
 		<div>
 			<img id="logofooter" src="images/logo.png" alt="logo">
 		</div>	
     </footer>    
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="javascripts/messages.js"></script>
+    <script src="javascripts/singleplayer.js"></script>
 </body>
 </html>
 

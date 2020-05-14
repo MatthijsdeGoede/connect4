@@ -31,8 +31,8 @@ app.get('/', function(req, res){
   res.render('splash.ejs', { draws: gameStats.draws, gamesPlayed: gameStats.gamesPlayed, gamesOngoing: gameStats.gamesOngoing});
 })
 
-app.get('/game', function(req, res){
-  res.sendFile("game.html", {root: "./public"});
+app.get('/multiplayer', function(req, res){
+  res.sendFile("multiplayer.html", {root: "./public"});
 })
 
 app.get('/singleplayer', function(req, res){
