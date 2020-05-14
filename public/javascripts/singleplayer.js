@@ -51,6 +51,7 @@ function startscreen(){
 function start(){
     time = 0;
     document.getElementById("startscreen").style.display = "none";
+    document.getElementById("player-turn").style.display = "inline-block";
     document.getElementById("gametime").style.display = "block";
     document.getElementById("replay").style.display = "inline-block";
     document.getElementById("gamegrid").style.display = "inline-block";  
