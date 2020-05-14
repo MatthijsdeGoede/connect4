@@ -32,7 +32,7 @@ var time = 0;
     }
 })();
 
-function retrieveUserName(){
+function retrieveNickName(){
     let date = new Date(Date.now() + 86400e3);
     date = date.toUTCString();
     myName = document.getElementById("nickname").value;
@@ -43,8 +43,8 @@ function retrieveUserName(){
 function startscreen(){
     var playerBlock = document.getElementById("players");
     playerBlock.style.display = "block";
-    var opponentColor = (gs.playerType == 0) ? getColorClass(1) : getColorClass(0);
-    playerBlock.innerHTML = myName + `<span class=${getColorClass(gs.playerType)}> •</span>` + "<br>" + gs.opponent + `<span class=${opponentColor}> •</span>`;
+    var opponentColor = (playerType == 0) ? getColorClass(1) : getColorClass(0);
+    playerBlock.innerHTML = myName + `<span class=${getColorClass(playerType)}> •</span>` + "<br>" + opponent + `<span class=${opponentColor}> •</span>`;
     document.getElementById("startscreen").style.display = "inline-block";
 }
 
@@ -81,12 +81,12 @@ for (let i=0; i < tableData.length; i++){
 
 $(".cell").bind('mouseover', function() {
 
-    if($(this)[0].style.backgroundColor == 'white' && !gs.GameStategameOver && checkValidMove($(this)[0]) && gs.currentPlayer == gs.playerType){
-        $(this)[0].style.border = `7px solid ${getColor(gs.playerType)}`;
+    if($(this)[0].style.backgroundColor == 'white' && !GameStategameOver && checkValidMove($(this)[0]) && currentPlayer == playerType){
+        $(this)[0].style.border = `7px solid ${getColor(playerType)}`;
         $(this)[0].style.width = '56px';
         $(this)[0].style.height = '56px';
     }
-    else if($(this)[0].style.backgroundColor == 'white' && !gs.gameOver && gs.currentPlayer == gs.playerType){
+    else if($(this)[0].style.backgroundColor == 'white' && !gameOver && currentPlayer == playerType){
         $(this)[0].style.border = '7px solid grey';
         $(this)[0].style.width = '56px';
         $(this)[0].style.height = '56px';
@@ -124,12 +124,12 @@ function getColorClass(id){
 }
 
 function updateTurnInfo(){
-    if(gs.currentPlayer == gs.playerType){
-        playerStatus.innerHTML = `<span class='${getColorClass(gs.currentPlayer)}'>Your</span> turn`;
+    if(currentPlayer == playerType){
+        playerStatus.innerHTML = `<span class='${getColorClass(currentPlayer)}'>Your</span> turn`;
     }
     else{     
-        var textaddon = gs.opponent.substring(gs.opponent.length-1) == "s" ? "" : "'s";
-        playerStatus.innerHTML = `<span class='${getColorClass(gs.currentPlayer)}'>${gs.opponent}${textaddon}</span> turn`;
+        var textaddon = opponent.substring(opponent.length-1) == "s" ? "" : "'s";
+        playerStatus.innerHTML = `<span class='${getColorClass(currentPlayer)}'>${opponent}${textaddon}</span> turn`;
     }  
 }
 
@@ -154,8 +154,8 @@ function showCombination(){
 }
 
 function changeColor(cell){ 
-    if(gs.currentPlayer == gs.playerType && cell.style.backgroundColor == 'white' && !gs.gameOver && checkValidMove(cell)){
-        changeColorHelper(cell, gs.playerType);
+    if(currentPlayer == playerType && cell.style.backgroundColor == 'white' && !gameOver && checkValidMove(cell)){
+        changeColorHelper(cell, playerType);
     }
 }
 
@@ -165,17 +165,17 @@ function changeColorHelper(cell, colorId){
     let winnerText = '';
 
     if (horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()){
-        if(colorId == gs.playerType){
+        if(colorId == playerType){
             winnerText = `Game over! <span class='${getColorClass(colorId)}'>You</span> won!`;
             
             var outgoingMsg = Messages.O_GAME_FINISHED;
             outgoingMsg.row = cell.parentElement.rowIndex;
             outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = gs.playerType;
-            gs.socket.send(JSON.stringify(outgoingMsg)); 
+            outgoingMsg.sender = playerType;
+            socket.send(JSON.stringify(outgoingMsg)); 
         }
         else{
-            winnerText = `Game over! <span class='${getColorClass(colorId)}'>${gs.opponent}</span> won!`;
+            winnerText = `Game over! <span class='${getColorClass(colorId)}'>${opponent}</span> won!`;
         }
         playerStatus.innerHTML = winnerText;
 
@@ -183,23 +183,23 @@ function changeColorHelper(cell, colorId){
         setTimeout(function(){ fadeOut(winnerText) }, 2000);
     }
     else if (drawCheck()){
-        if(colorId == gs.playerType){
+        if(colorId == playerType){
             var outgoingMsg = Messages.O_DRAW;
             outgoingMsg.row = cell.parentElement.rowIndex;
             outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = gs.playerType;
-            gs.socket.send(JSON.stringify(outgoingMsg)); 
+            outgoingMsg.sender = playerType;
+            socket.send(JSON.stringify(outgoingMsg)); 
         }
         playerStatus.innerHTML = 'Draw!';
         setTimeout(function(){ fadeOut('Draw!') }, 2000);
     }
     else{
-        if(colorId == gs.playerType){
+        if(colorId == playerType){
             var outgoingMsg = Messages.O_MOVE_COMPLETED;
             outgoingMsg.row = cell.parentElement.rowIndex;
             outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = gs.playerType;
-            gs.socket.send(JSON.stringify(outgoingMsg)); 
+            outgoingMsg.sender = playerType;
+            socket.send(JSON.stringify(outgoingMsg)); 
         }  
     }
 }
@@ -302,7 +302,7 @@ function drawCheck(){
 
 function timer(){
     setTimeout(function(){
-        if(!gs.gameOver){
+        if(!gameOver){
             time++;
             var mins = Math.floor(time/10/60);
             var secs = Math.floor(time/10 % 60);
@@ -313,7 +313,7 @@ function timer(){
             if(secs < 10){
                 secs = "0" + secs;
             }
-            if(gs.gameStarted){
+            if(gameStarted){
                 document.getElementById("gametime").innerHTML = hours + ":" + mins + ":" + secs;
                 timer(true);
             }
