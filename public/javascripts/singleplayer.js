@@ -41,6 +41,7 @@ function retrieveNickName(){
 }
 
 function startscreen(){
+    document.getElementById("enter-nickname").style.display = "none";
     var playerBlock = document.getElementById("players");
     playerBlock.style.display = "block";
     var opponentColor = (playerType == 0) ? getColorClass(1) : getColorClass(0);
