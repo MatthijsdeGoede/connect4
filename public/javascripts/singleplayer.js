@@ -58,6 +58,7 @@ function start(){
 }
     
 function changeTurn(){
+    currentPlayer = currentPlayer == 1 ? 0 : 1;
     updateTurnInfo();
     if(currentPlayer == 1){
         quickComputerPlayer();
