@@ -4,7 +4,7 @@ this.winner;
 this.opponent = "Computer";
 this.playerType = 0;    
 var myName = null;
-var played = null;
+var played = tableRow[5].children[2];
 
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
@@ -307,8 +307,8 @@ function timer(){
 }
 
 function quickComputerPlayer(){
-    let col = cell.cellIndex+1;
-    let row = cell.parentElement.rowIndex+1;
+    let col = played.cellIndex+1;
+    let row = played.parentElement.rowIndex;
     changeColor(tableRow[row].children[col]);
     changeTurn();
 }
