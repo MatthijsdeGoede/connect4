@@ -1,6 +1,5 @@
 this.currentPlayer = Math.round(Math.random());
 this.gameOver = false;
-this.gameStarted = true;
 this.winner;
 this.opponent = "Computer";
 this.playerType = 0;    
@@ -45,6 +44,7 @@ function startscreen(){
     var opponentColor = (playerType == 0) ? getColorClass(1) : getColorClass(0);
     playerBlock.innerHTML = myName + `<span class=${getColorClass(playerType)}> •</span>` + "<br>" + opponent + `<span class=${opponentColor}> •</span>`;
     document.getElementById("startscreen").style.display = "inline-block";
+    timer();
 }
 
 function start(){
@@ -295,14 +295,8 @@ function timer(){
             if(secs < 10){
                 secs = "0" + secs;
             }
-            if(gameStarted){
-                document.getElementById("gametime").innerHTML = hours + ":" + mins + ":" + secs;
-                timer(true);
-            }
-            else{
-                document.getElementById("waitingtime").innerHTML = mins + ":" + secs;
-                timer(false);
-            }
+            document.getElementById("gametime").innerHTML = hours + ":" + mins + ":" + secs;
+            timer(true);
         }
     },100);
 }
