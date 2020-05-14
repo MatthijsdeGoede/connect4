@@ -15,8 +15,6 @@ var movesound = new Audio("../data/pop.mp3");
 var combination = [];
 var time = 0;
 
-//we first start with retrieving the player name
-
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
     var cookies=[];
@@ -82,7 +80,7 @@ for (let i=0; i < tableData.length; i++){
 
 $(".cell").bind('mouseover', function() {
 
-    if($(this)[0].style.backgroundColor == 'white' && !GameStategameOver && checkValidMove($(this)[0]) && currentPlayer == playerType){
+    if($(this)[0].style.backgroundColor == 'white' && !gameOver && checkValidMove($(this)[0]) && currentPlayer == playerType){
         $(this)[0].style.border = `7px solid ${getColor(playerType)}`;
         $(this)[0].style.width = '56px';
         $(this)[0].style.height = '56px';
@@ -168,12 +166,6 @@ function changeColorHelper(cell, colorId){
     if (horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()){
         if(colorId == playerType){
             winnerText = `Game over! <span class='${getColorClass(colorId)}'>You</span> won!`;
-            
-            var outgoingMsg = Messages.O_GAME_FINISHED;
-            outgoingMsg.row = cell.parentElement.rowIndex;
-            outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = playerType;
-            socket.send(JSON.stringify(outgoingMsg)); 
         }
         else{
             winnerText = `Game over! <span class='${getColorClass(colorId)}'>${opponent}</span> won!`;
@@ -184,23 +176,12 @@ function changeColorHelper(cell, colorId){
         setTimeout(function(){ fadeOut(winnerText) }, 2000);
     }
     else if (drawCheck()){
-        if(colorId == playerType){
-            var outgoingMsg = Messages.O_DRAW;
-            outgoingMsg.row = cell.parentElement.rowIndex;
-            outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = playerType;
-            socket.send(JSON.stringify(outgoingMsg)); 
-        }
         playerStatus.innerHTML = 'Draw!';
         setTimeout(function(){ fadeOut('Draw!') }, 2000);
     }
     else{
         if(colorId == playerType){
-            var outgoingMsg = Messages.O_MOVE_COMPLETED;
-            outgoingMsg.row = cell.parentElement.rowIndex;
-            outgoingMsg.column = cell.cellIndex;
-            outgoingMsg.sender = playerType;
-            socket.send(JSON.stringify(outgoingMsg)); 
+            changeTurn()
         }  
     }
 }

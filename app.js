@@ -81,7 +81,7 @@ wss.on("connection", function connection(ws) {
     websockets[con.id] = currentGame;
 
     if(currentGame.hasTwoConnectedPlayers()){
-      var startingPlayer = 0;
+      var startingPlayer = Math.round(Math.random());
       gameStats.gamesOngoing++;
       let message1 = messages.O_READY_TO_START;
       message1.data = 0;
