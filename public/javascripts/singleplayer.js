@@ -41,7 +41,6 @@ function retrieveUserName(){
 }
 
 function startscreen(){
-    document.getElementById("waiting-wrapper").style.display = "none";
     var playerBlock = document.getElementById("players");
     playerBlock.style.display = "block";
     var opponentColor = (gs.playerType == 0) ? getColorClass(1) : getColorClass(0);
