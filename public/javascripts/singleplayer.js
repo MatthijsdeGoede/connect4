@@ -4,6 +4,7 @@ this.winner;
 this.opponent = "Computer";
 this.playerType = 0;    
 var myName = null;
+var played = null;
 
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
@@ -155,6 +156,7 @@ function showCombination(){
 function changeColor(cell){ 
     if(currentPlayer == playerType && cell.style.backgroundColor == 'white' && !gameOver && checkValidMove(cell)){
         changeColorHelper(cell, playerType);
+        played = cell;
     }
 }
 
@@ -299,4 +301,11 @@ function timer(){
             timer(true);
         }
     },100);
+}
+
+function quickComputerPlayer(){
+    let col = cell.cellIndex+1;
+    let row = cell.parentElement.rowIndex+1;
+    changeColor(tableRow[row].children[col]);
+    changeTurn();
 }
