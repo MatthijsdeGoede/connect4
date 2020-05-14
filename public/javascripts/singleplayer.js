@@ -4,13 +4,13 @@ this.winner;
 this.opponent = "Computer";
 this.playerType = 0;    
 var myName = null;
-var played = tableRow[5].children[2];
 
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
 var elem = document.documentElement;
 var movesound = new Audio("../data/pop.mp3");
+var played = tableRow[5].children[2];
 
 var combination = [];
 var time = 0;
@@ -51,7 +51,6 @@ function startscreen(){
 function start(){
     time = 0;
     document.getElementById("startscreen").style.display = "none";
-    document.getElementById("player-turn").style.display = "inline-block";
     document.getElementById("gametime").style.display = "block";
     document.getElementById("replay").style.display = "inline-block";
     document.getElementById("gamegrid").style.display = "inline-block";  
@@ -309,7 +308,7 @@ function timer(){
 
 function quickComputerPlayer(){
     let col = played.cellIndex+1;
-    let row = played.parentElement.rowIndex;
+    let row = played.parentElement.rowIndex+1;
     changeColor(tableRow[row].children[col]);
     changeTurn();
 }
