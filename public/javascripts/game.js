@@ -1,16 +1,6 @@
-
-// HEAVY WIP
-
 var tableRow = null;
 var tableData = null;
 var combination = [];
-
-//create general check function that will be exported
-export default function check(){
-    if(horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()){
-        
-    }
-}
 
 function connect4Check(one, two, three, four){
     return (one === two && one === three && one === four && one !== 'white' && one !== undefined);

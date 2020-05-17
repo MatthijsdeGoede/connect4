@@ -1,5 +1,3 @@
-import PriorityQueue from './priorityQueue.js';
-
 var currentPlayer = Math.round(Math.random());
 var gameOver = false;
 var opponent = "Computer";
