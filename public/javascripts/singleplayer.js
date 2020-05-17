@@ -10,10 +10,15 @@ var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
 var elem = document.documentElement;
 var movesound = new Audio("../data/pop.mp3");
-var played = tableRow[5].children[2];
+var play = tableRow[5].children[0];
 
 var combination = [];
 var time = 0;
+
+function quickComputerPlayer(){
+    changeColorHelper(play, 1);
+    changeTurn();
+}
 
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
@@ -159,7 +164,6 @@ function showCombination(){
 function changeColor(cell){ 
     if(currentPlayer == playerType && cell.style.backgroundColor == 'white' && !gameOver && checkValidMove(cell)){
         changeColorHelper(cell, playerType);
-        played = cell;
     }
 }
 
@@ -304,11 +308,4 @@ function timer(){
             timer(true);
         }
     },100);
-}
-
-function quickComputerPlayer(){
-    let col = played.cellIndex+1;
-    let row = played.parentElement.rowIndex+1;
-    changeColor(tableRow[row].children[col]);
-    changeTurn();
 }
