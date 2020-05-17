@@ -1,19 +1,36 @@
-this.currentPlayer = Math.round(Math.random());
-this.gameOver = false;
-this.winner;
-this.opponent = "Computer";
-this.playerType = 0;    
+import PriorityQueue from './priorityQueue.js';
+
+var currentPlayer = Math.round(Math.random());
+var gameOver = false;
+var opponent = "Computer";
+var playerType = 0;    
 var myName = null;
 
+var pq = new PriorityQueue();
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
-var elem = document.documentElement;
 var movesound = new Audio("../data/pop.mp3");
 var play = tableRow[5].children[0];
 
 var combination = [];
 var time = 0;
+
+for(let i = 0; i < 6; i++){
+    for(let j = 0; j < 6; j++){
+        if(i == 5 && j == 3){
+            pq.enqueue(tableRow[5].tableData[3], 1);
+        }
+        else{
+            pq.enqueue(tableRow[i].tableData[j], 0);
+        }
+    }
+}
+
+//when the computer is the starting player
+if(currentPlayer == 1){
+    changeColorHelper(pq.dequeue(), currentPlayer);
+}
 
 function quickComputerPlayer(){
     changeColorHelper(play, 1);
