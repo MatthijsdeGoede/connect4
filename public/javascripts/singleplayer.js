@@ -1,12 +1,10 @@
-import { MaxPriorityQueue } from '../node_modules/@datastructures-js/priority-queue';
-
 var currentPlayer = Math.round(Math.random());
 var gameOver = false;
 var opponent = "Computer";
 var playerType = 0;    
 var myName = null;
 
-const pq = new MaxPriorityQueue();
+var pq = new PriorityQueue();
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
@@ -18,15 +16,13 @@ var time = 0;
 for(let i = 0; i < 6; i++){
     for(let j = 0; j < 7; j++){
         if(i == 5 && j == 3){
-            pq.enqueue(tableRow[5].children[3], 1);
+            pq.enqueue(53, 1);
         }
         else{
-            pq.enqueue(tableRow[i].children[j], 0);
+            pq.enqueue(10 * (i+1) + j, 0);
         }
     }
 }
-
-alert(pq.toArray());
 
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
@@ -76,7 +72,11 @@ function start(){
 }
 
 function quickComputerPlayer(){
-    changeColorHelper(pq.dequeue(), currentPlayer);
+    let composed = pq.dequeue(); 
+    let col = composed % 10;
+    let row = (composed - column)/10 - 1;
+
+    changeColorHelper(tableRow[row].children[col], currentPlayer);
     changeTurn();
 }
     
