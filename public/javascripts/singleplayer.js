@@ -24,16 +24,6 @@ for(let i = 0; i < 6; i++){
     }
 }
 
-//when the computer is the starting player
-if(currentPlayer == 1){
-    quickComputerPlayer();
-}
-
-function quickComputerPlayer(){
-    changeColorHelper(pq.dequeue, currentPlayer);
-    changeTurn();
-}
-
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
     var cookies=[];
@@ -74,6 +64,16 @@ function start(){
     document.getElementById("replay").style.display = "inline-block";
     document.getElementById("gamegrid").style.display = "inline-block";  
     updateTurnInfo();
+    
+    //when the computer is the starting player
+    if(currentPlayer == 1){
+        quickComputerPlayer();
+    }
+}
+
+function quickComputerPlayer(){
+    changeColorHelper(pq.dequeue, currentPlayer);
+    changeTurn();
 }
     
 function changeTurn(){
