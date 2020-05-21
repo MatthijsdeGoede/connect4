@@ -72,11 +72,11 @@ function start(){
 }
 
 function quickComputerPlayer(){
-    let composed = pq.dequeue(); 
-    let col = composed % 10;
+    let composed = pq.dequeue().value; 
+    let col = composed % 10;jav
     let row = (composed - col)/10 - 1;
 
-    changeColorHelper(tableRow[row].children[col], currentPlayer);
+    changeColorHelper(tableRow[2].children[3], currentPlayer);
     changeTurn();
 }
     
