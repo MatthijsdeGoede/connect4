@@ -9,6 +9,7 @@ var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
 var movesound = new Audio("../data/pop.mp3");
+var play = tableRow[5].tableData[3];
 
 var combination = [];
 var time = 0;
