@@ -1,4 +1,4 @@
-import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
+import { MaxPriorityQueue } from '../node_modules/@datastructures-js/priority-queue';
 
 var currentPlayer = Math.round(Math.random());
 var gameOver = false;
