@@ -1,3 +1,5 @@
+import { MaxPriorityQueue } from '@datastructures-js/priority-queue';
+
 var currentPlayer = Math.round(Math.random());
 var gameOver = false;
 var opponent = "Computer";
