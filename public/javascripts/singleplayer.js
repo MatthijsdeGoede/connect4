@@ -6,7 +6,7 @@ var opponent = "Computer";
 var playerType = 0;    
 var myName = null;
 
-var pq = new PriorityQueue();
+const pq = new MaxPriorityQueue();
 var tableRow = document.getElementsByTagName('tr');
 var tableData = document.getElementsByTagName('td');
 var playerStatus = document.getElementById("player-turn");
@@ -25,6 +25,8 @@ for(let i = 0; i < 6; i++){
         }
     }
 }
+
+alert(pq.toArray());
 
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
@@ -74,7 +76,7 @@ function start(){
 }
 
 function quickComputerPlayer(){
-    changeColorHelper(pq.dequeue, currentPlayer);
+    changeColorHelper(pq.dequeue(), currentPlayer);
     changeTurn();
 }
     
@@ -84,10 +86,6 @@ function changeTurn(){
     if(currentPlayer == 1){
         quickComputerPlayer();
     }
-}
-
-function updateAfterPlayerTurn(row, column){
-    changeColorHelper(tableRow[row].children[column], 0);
 }
 
 window.addEventListener("resize", function(){
