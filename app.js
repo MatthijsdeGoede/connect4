@@ -39,6 +39,10 @@ app.get('/singleplayer', function(req, res){
   res.sendFile("singleplayer.html", {root: "./public"});
 })
 
+app.get('/favicon.ico', function(req, res){
+  //maybe add an icon here?
+})
+
 app.get("/stats", function(req, res){
 
   res.json(gameStats);

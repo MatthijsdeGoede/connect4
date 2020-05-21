@@ -183,6 +183,9 @@ function changeColor(cell){
 
 function changeColorHelper(cell, colorId){
     movesound.play();
+    alert(cell.style);
+    alert(cell.style.backgroundColor);
+
     cell.style.backgroundColor = getColor(colorId);
     let winnerText = '';
 
