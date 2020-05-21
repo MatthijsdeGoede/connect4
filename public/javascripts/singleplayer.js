@@ -74,7 +74,7 @@ function start(){
 function quickComputerPlayer(){
     let composed = pq.dequeue(); 
     let col = composed % 10;
-    let row = (composed - column)/10 - 1;
+    let row = (composed - col)/10 - 1;
 
     changeColorHelper(tableRow[row].children[col], currentPlayer);
     changeTurn();
@@ -183,8 +183,6 @@ function changeColor(cell){
 
 function changeColorHelper(cell, colorId){
     movesound.play();
-    alert(cell.style);
-    alert(cell.style.backgroundColor);
 
     cell.style.backgroundColor = getColor(colorId);
     let winnerText = '';
