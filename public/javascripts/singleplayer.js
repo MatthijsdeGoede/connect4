@@ -13,16 +13,16 @@ var movesound = new Audio("../data/pop.mp3");
 var combination = [];
 var time = 0;
 
-for(let i = 0; i < 6; i++){
-    for(let j = 0; j < 7; j++){
-        if(i === 5 && j === 3){
-            pq.enqueue(tableRow[5].tableData[3], 1);
-        }
-        else{
-            pq.enqueue(tableRow[i].tableData[j], 0);
-        }
-    }
-}
+// for(let i = 0; i < 6; i++){
+//     for(let j = 0; j < 7; j++){
+//         if(i === 5 && j === 3){
+//             pq.enqueue(tableRow[5].tableData[3], 1);
+//         }
+//         else{
+//             pq.enqueue(tableRow[i].tableData[j], 0);
+//         }
+//     }
+// }
 
 //when the computer is the starting player
 if(currentPlayer == 1){
