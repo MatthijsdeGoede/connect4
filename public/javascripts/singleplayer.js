@@ -16,10 +16,10 @@ var time = 0;
 for(let i = 0; i < 6; i++){
     for(let j = 0; j < 7; j++){
         if(i == 5 && j == 3){
-            pq.enqueue(53, 1);
+            pq.enqueue(tableRow[i].children[j], 1);
         }
         else{
-            pq.enqueue(10 * (i+1) + j, 0);
+            pq.enqueue(tableRow[i].children[j], 0);
         }
     }
 }
@@ -72,11 +72,7 @@ function start(){
 }
 
 function quickComputerPlayer(){
-    let composed = pq.dequeue().value; 
-    let col = composed % 10;jav
-    let row = (composed - col)/10 - 1;
-
-    changeColorHelper(tableRow[2].children[3], currentPlayer);
+    changeColorHelper(pq.dequeue(), currentPlayer);
     changeTurn();
 }
     
@@ -182,6 +178,8 @@ function changeColor(cell){
 }
 
 function changeColorHelper(cell, colorId){
+    pq.deleteFromQueue(cell);
+    
     movesound.play();
 
     cell.style.backgroundColor = getColor(colorId);

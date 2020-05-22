@@ -37,12 +37,22 @@ class PriorityQueue {
             } 
         } 
     
-        // if the element have the highest priority 
+        // if the element has the highest priority 
         // it is added at the end of the queue 
         if (!contain) { 
             this.items.push(qElement); 
         } 
     }  
+
+    // deletes the element with given value from the queue
+    deleteFromQueue(cell)
+    {       
+        for(let k = 0; k < this.items.length; k++){
+            if(this.items[k].element == cell){
+                this.items.splice(k, 1);                
+            }
+        }
+    }
     
     // dequeue method to remove 
     // element from the queue 
@@ -54,7 +64,7 @@ class PriorityQueue {
         // returns Underflow 
         if (this.isEmpty()) 
             return "Underflow"; 
-        return this.items.shift(); 
+        return this.items.pop().element;         
     }
     
     // front function 
@@ -64,7 +74,7 @@ class PriorityQueue {
         // in the Priority queue without removing it. 
         if (this.isEmpty()) 
             return "No elements in Queue"; 
-        return this.items[0]; 
+        return this.items[this.items.length-1]; 
     } 
 
     // isEmpty function 
@@ -79,7 +89,7 @@ class PriorityQueue {
     printPQueue() 
     { 
         var str = ""; 
-        for (var i = 0; i < this.items.length; i++) 
+        for (var i = this.items.length-1; i >= 0; i--) 
             str += this.items[i].element + " "; 
         return str; 
     }
