@@ -13,17 +13,6 @@ var movesound = new Audio("../data/pop.mp3");
 var combination = [];
 var time = 0;
 
-for(let i = 0; i < 6; i++){
-    for(let j = 0; j < 7; j++){
-        if(i == 5 && j == 3){
-            pq.enqueue(tableRow[i].children[j], 1);
-        }
-        else{
-            pq.enqueue(tableRow[i].children[j], 0);
-        }
-    }
-}
-
 (function checkNickNameCookie(){
     var cookiesArray = document.cookie.split('; ');
     var cookies=[];
@@ -67,12 +56,13 @@ function start(){
     
     //when the computer is the starting player
     if(currentPlayer == 1){
+        pq.enqueue(tableRow[5].children[3], 1);
         quickComputerPlayer();
     }
 }
 
 function quickComputerPlayer(){
-    changeColorHelper(pq.dequeue(), currentPlayer);
+    changeColorHelper(pq.dequeue().element, currentPlayer);
     changeTurn();
 }
     
@@ -185,7 +175,7 @@ function changeColorHelper(cell, colorId){
     cell.style.backgroundColor = getColor(colorId);
     let winnerText = '';
 
-    if (horizontalCheck() || verticalCheck() || diagonalCheck() || diagonalCheck2()){
+    if (checkWon()){
         if(colorId == playerType){
             winnerText = `Game over! <span class='${getColorClass(colorId)}'>You</span> won!`;
         }
@@ -219,11 +209,26 @@ function fadeOut(winnerText){
     document.getElementById("winnerText").innerHTML = winnerText;
 }
 
-function connect4Check(one, two, three, four){
-    return (one === two && one === three && one === four && one !== 'white' && one !== undefined);
+function checkWon(){
+    return (horizontalCheck4() || verticalCheck4() || diagonalCheck4() || diagonalCheck24());
 }
 
-function horizontalCheck(){
+function connect4Check(one, two, three, four){
+    return (one === four && connect3Check(one, two, three));
+}
+
+function connect3Check(one, two, three){
+    return (one === three && connect2Check(one, two));
+}
+
+function connect2Check(one, two){
+    return (one === two && one == getColor(player) && one !== undefined);
+}
+
+
+//Idea: check 4 cells, check 3 cells check 2 cells parameterized
+
+function horizontalCheck4(){
     for (let row = 0; row < tableRow.length; row++){
         for (let col =0; col < 4; col++){
         
@@ -240,7 +245,36 @@ function horizontalCheck(){
     }
 }
 
-function verticalCheck(){
+function horizontalCheck3(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 5; col++){
+        
+            let a = tableRow[row].children[col];
+            let b = tableRow[row].children[col+1];
+            let c = tableRow[row].children[col+2];
+
+            if (connect3Check(a.style.backgroundColor,b.style.backgroundColor, c.style.backgroundColor)){                        
+                return true;
+            }
+        }
+    }
+}
+
+function horizontalCheck2(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 6; col++){
+        
+            let a = tableRow[row].children[col];
+            let b = tableRow[row].children[col+1];
+
+            if (connect2Check(a.style.backgroundColor,b.style.backgroundColor)){                        
+                return true;
+            }
+        }
+    }
+}
+
+function verticalCheck4(){
     for (let col = 0; col < 7; col++){
         for (let row = 0; row < 3; row++){
 
@@ -257,7 +291,37 @@ function verticalCheck(){
     }
 }
 
-function diagonalCheck(){
+function verticalCheck3(){
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 4; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col];
+            let c = tableRow[row+2].children[col];
+            
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){                    
+                return true;
+            }
+        }   
+    }
+}
+
+function verticalCheck2(){
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 5; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col];
+            
+            if (connect2Check(a.style.backgroundColor, b.style.backgroundColor)){                    
+                return true;
+            }
+        }   
+    }
+}
+
+
+function diagonalCheck4(){
     for(let col = 0; col < 4; col++){
         for (let row = 0; row < 3; row++){
 
@@ -272,10 +336,38 @@ function diagonalCheck(){
             }
         }
     }
+}
 
+function diagonalCheck3(){
+    for(let col = 0; col < 5; col++){
+        for (let row = 0; row < 4; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col+1];
+            let c = tableRow[row+2].children[col+2];
+
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){
+                return true;
+            }
+        }
+    }
 }
 
 function diagonalCheck2(){
+    for(let col = 0; col < 6; col++){
+        for (let row = 0; row < 5; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col+1];
+
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor)){
+                return true;
+            }
+        }
+    }
+}
+
+function diagonalCheck24(){
     for(let col = 0; col < 4; col++){
         for (let row = 5; row > 2; row--){
 
@@ -286,6 +378,35 @@ function diagonalCheck2(){
 
             if (connect4Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor, d.style.backgroundColor)){
                 combination = [a, b, c, d];
+                return true;
+            }
+        }
+    }
+}
+
+function diagonalCheck23(){
+    for(let col = 0; col < 5; col++){
+        for (let row = 5; row > 1; row--){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row-1].children[col+1];
+            let c = tableRow[row-2].children[col+2];
+
+            if (connect4Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){
+                return true;
+            }
+        }
+    }
+}
+
+function diagonalCheck22(){
+    for(let col = 0; col < 6; col++){
+        for (let row = 5; row > 0; row--){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row-1].children[col+1];
+    
+            if (connect4Check(a.style.backgroundColor, b.style.backgroundColor)){
                 return true;
             }
         }
