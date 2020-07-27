@@ -9,7 +9,7 @@
 body {
 	background-color: var(--light-background-color);
 	color: white;
-	font-family: HP Simplified;
+	font-family: 'Encode Sans Condensed', sans-serif;
 	font-size: 20px;
 	text-align: center;
 }
@@ -38,7 +38,7 @@ button {
 	background-color: var(--yellow-color);
 	border: none;
 	color: white;
-	font-family: HP Simplified;
+	font-family: 'Encode Sans Condensed', sans-serif;
 	display: block;
 }
 
@@ -134,7 +134,7 @@ table tr {
 input[type="text"] {
     width: 500px;
     height: 40px;
-    font-family: HP Simplified;
+	font-family: 'Encode Sans Condensed', sans-serif;
     font-size: 25px;
     color: gray;
 }
