@@ -15,64 +15,79 @@ class PriorityQueue {
     constructor(){ 
         this.items = []; 
         this.temp = [];
-        this.won = false;
-    } 
+    }
   
-    // enqueue function to add element 
-    // to the queue as per priority 
+    // enqueue function to add element to the queue as per priority 
     enqueue(element, priority){ 
         // creating object from queue element 
-        var qElement = new QElement(element, priority); 
-        var contain = false; 
-    
-        // iterating through the entire 
-        // item array to add element at the 
-        // correct location of the Queue 
+        var qElement = new QElement(element, priority);
+        this.enqueueQElement(qElement); 
+    }
+
+    //enqueue function to add QElements to the queue 
+    enqueueQElement(qElement){
+        var contain = false;
+        
+        // iterating through the entire item array to add element at the correct location of the Queue 
         for (var i = 0; i < this.items.length; i++) { 
             if (this.items[i].priority > qElement.priority) { 
-                // Once the correct location is found it is 
-                // enqueued 
                 this.items.splice(i, 0, qElement); 
                 contain = true; 
                 break; 
             } 
         } 
     
-        // if the element has the highest priority 
-        // it is added at the end of the queue 
+        // if the element has the highest priority it is added at the end of the queue 
         if (!contain) { 
             this.items.push(qElement); 
         } 
     }
     
-    // dequeue method to remove 
-    // element from the queue 
-    dequeue(){ 
-        // return the dequeued element 
-        // and remove it. 
-        // if the queue is empty 
-        // returns Underflow 
-        if (this.isEmpty()) 
-            return "Underflow"; 
-        return this.items.pop();         
+    // dequeue method to remove element from the queue and return it. If the queue is empty, it returns Underflow.
+    // if the corresponding cell is not in the first row, the cell above the cell is inserted in the priority queue.
+    dequeueAndEnqueueAbove(){ 
+        if (this.isEmpty()){ 
+            return "Underflow";
+        }
+        
+        let qEelement = this.items.pop();
+        let row = qEelement.element.parentElement.rowIndex;
+        if(row > 0){
+            this.enqueueQElement(new QElement(tableRow[row-1].children[qEelement.element.cellIndex], Math.random()));
+        }
+
+        return qEelement;         
+    }
+
+    // method to remove the first item from the priorityqueue and return it.  
+    dequeue(){
+        if (this.isEmpty()){ 
+            return "Underflow";
+        }
+        
+        return this.items.pop();
+    }
+
+    // resets the priority queue by enqueuing the elements from a given entrylist 
+    reset(pqElements){
+        this.items = [];
+        pqElements.forEach(element => {
+            this.enqueueQElement(element);
+        });
     }
     
-    // front function 
+    // returns the highest priority element in the Priority queue without removing it. 
     front(){ 
-        // returns the highest priority element 
-        // in the Priority queue without removing it. 
         if (this.isEmpty()) 
             return "No elements in Queue"; 
         return this.items[this.items.length-1]; 
     } 
 
-    // isEmpty function 
-    isEmpty(){ 
-        // return true if the queue is empty. 
+    // checks whether the pq is empty or not 
+    isEmpty(){  
         return this.items.length == 0; 
     } 
 
-    // printQueue function 
     // prints all the element of the queue 
     printPQueue(){ 
         var str = ""; 
@@ -81,64 +96,29 @@ class PriorityQueue {
         return str; 
     }
 
-    // refresh method to refresh the priority queue
-    // all relevant cells are given a new weight
-    refreshPQ(cell){
-        for(let i = 0; i < this.items.length; i++){
-            if(front().element == cell){
-                this.items.dequeue();               
-            }
-            else {
-                this.temp[i] = this.items.dequeue();
-            }
-        }
-
-        let row = cell.parentElement.rowIndex;
-        if(row > 0){
-            this.temp[this.temp.length] = new QElement(tableRow[row-1].children[cell.cellIndex], 0);
-        }
-
-        while(this.temp.length > 0 && !this.won){
-            //recalculatePriority(this.temp[0]);
-            enqueue(this.temp[0]);
-            this.tempList.splice(0, 1);
-        }        
+    // method used for testing to take a look at the current state of the pq
+    lookInArray(){
+        return this.items;
     }
 
-    // recalculatePriority(qElement){
-    //     let value = 0;
-    //     var cell = qElement.element; 
-        
-    //     //Check whether its a winning move
-    //     cell.style.backgroundColor = getColor(1);
-    //     if(checkWon()){
-    //         value += 60;
-    //         this.won = true;
-    //     }
+    //retrieves a list of elements present in the priority queue after the given cell has been played
+    retrieveEntriesAfterTurn(cell){
+        this.temp = [];
 
-    //     //Check if it prevents the other player from winning
-    //     cell.style.backgroundColor = getColor(0);
-    //     if(checkWon()){
-    //         value += 50;
-    //     }
-
-    //     else if(){
-    //         value += 50;
-    //     }
-    //     else if(){
-    //         value += 40;
-    //     }
-    //     else if (){
-    //         value += 30;
-    //     }
-    //     else if (){
-    //         value += 20;
-    //     }
-    //     else {
-    //         value += 10;
-    //     }
-
-    //     qElement.priority = value;
-    //     cell.style.backgroundColor = 'white';
-    // }
+        let counter = 0;
+        while(!this.isEmpty()){
+            if(this.front().element == cell){
+                this.dequeue();
+            }
+            else{
+                this.temp[counter] = this.dequeue();
+                counter++;
+            }
+        }
+        let row = cell.parentElement.rowIndex;
+        if(row > 0){
+            this.temp[this.temp.length] = new QElement(tableRow[row-1].children[cell.cellIndex], Math.random());
+        }
+        return this.temp;        
+    }
 } 

@@ -54,15 +54,19 @@ function start(){
     document.getElementById("gamegrid").style.display = "inline-block";  
     updateTurnInfo();
     
-    //when the computer is the starting player
+    // initializing the priorityqueue with the cells of the last row with a random priority between 0 and 1. 
+    for(let i = 0; i < 7; i++){
+        pq.enqueue(tableRow[5].children[i], Math.random());
+    }
+
+    // when the computer is the starting player
     if(currentPlayer == 1){
-        pq.enqueue(tableRow[5].children[3], 1);
         quickComputerPlayer();
     }
 }
 
 function quickComputerPlayer(){
-    changeColorHelper(pq.dequeue().element, currentPlayer);
+    changeColorHelper(pq.dequeueAndEnqueueAbove().element, currentPlayer);
     changeTurn();
 }
     
@@ -167,9 +171,7 @@ function changeColor(cell){
     }
 }
 
-function changeColorHelper(cell, colorId){
-    pq.deleteFromQueue(cell);
-    
+function changeColorHelper(cell, colorId){    
     movesound.play();
 
     cell.style.backgroundColor = getColor(colorId);
@@ -193,9 +195,11 @@ function changeColorHelper(cell, colorId){
     }
     else{
         if(colorId == playerType){
-            changeTurn()
+            updatePQAfterPlayerTurn(cell);
+            changeTurn();
         }  
     }
+    console.log(pq.lookInArray());
 }
 
 function fadeOut(winnerText){        
@@ -213,6 +217,14 @@ function checkWon(){
     return (horizontalCheck4() || verticalCheck4() || diagonalCheck4() || diagonalCheck24());
 }
 
+function checkConnectsThree(){
+    return (horizontalCheck3() || verticalCheck3() || diagonalCheck3() || diagonalCheck23());
+}
+
+function checkConnectsTwo(){
+    return (horizontalCheck2() || verticalCheck2() || diagonalCheck2() || diagonalCheck22());
+}
+
 function connect4Check(one, two, three, four){
     return (one === four && connect3Check(one, two, three));
 }
@@ -222,11 +234,8 @@ function connect3Check(one, two, three){
 }
 
 function connect2Check(one, two){
-    return (one === two && one == getColor(player) && one !== undefined);
+    return (one === two && one != 'white' && one !== undefined);
 }
-
-
-//Idea: check 4 cells, check 3 cells check 2 cells parameterized
 
 function horizontalCheck4(){
     for (let row = 0; row < tableRow.length; row++){
@@ -237,37 +246,8 @@ function horizontalCheck4(){
             let c = tableRow[row].children[col+2]
             let d = tableRow[row].children[col+3];
 
-            if (connect4Check(a.style.backgroundColor,b.style.backgroundColor, c.style.backgroundColor, d.style.backgroundColor)){
-                combination = [a, b, c, d];                        
-                return true;
-            }
-        }
-    }
-}
-
-function horizontalCheck3(){
-    for (let row = 0; row < tableRow.length; row++){
-        for (let col =0; col < 5; col++){
-        
-            let a = tableRow[row].children[col];
-            let b = tableRow[row].children[col+1];
-            let c = tableRow[row].children[col+2];
-
-            if (connect3Check(a.style.backgroundColor,b.style.backgroundColor, c.style.backgroundColor)){                        
-                return true;
-            }
-        }
-    }
-}
-
-function horizontalCheck2(){
-    for (let row = 0; row < tableRow.length; row++){
-        for (let col =0; col < 6; col++){
-        
-            let a = tableRow[row].children[col];
-            let b = tableRow[row].children[col+1];
-
-            if (connect2Check(a.style.backgroundColor,b.style.backgroundColor)){                        
+            if (connect4Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor, d.style.backgroundColor)){
+                combination = [a, b, c, d];                    
                 return true;
             }
         }
@@ -291,36 +271,6 @@ function verticalCheck4(){
     }
 }
 
-function verticalCheck3(){
-    for (let col = 0; col < 7; col++){
-        for (let row = 0; row < 4; row++){
-
-            let a = tableRow[row].children[col];
-            let b = tableRow[row+1].children[col];
-            let c = tableRow[row+2].children[col];
-            
-            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){                    
-                return true;
-            }
-        }   
-    }
-}
-
-function verticalCheck2(){
-    for (let col = 0; col < 7; col++){
-        for (let row = 0; row < 5; row++){
-
-            let a = tableRow[row].children[col];
-            let b = tableRow[row+1].children[col];
-            
-            if (connect2Check(a.style.backgroundColor, b.style.backgroundColor)){                    
-                return true;
-            }
-        }   
-    }
-}
-
-
 function diagonalCheck4(){
     for(let col = 0; col < 4; col++){
         for (let row = 0; row < 3; row++){
@@ -332,35 +282,6 @@ function diagonalCheck4(){
 
             if (connect4Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor, d.style.backgroundColor)){
                 combination = [a, b, c, d];
-                return true;
-            }
-        }
-    }
-}
-
-function diagonalCheck3(){
-    for(let col = 0; col < 5; col++){
-        for (let row = 0; row < 4; row++){
-
-            let a = tableRow[row].children[col];
-            let b = tableRow[row+1].children[col+1];
-            let c = tableRow[row+2].children[col+2];
-
-            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){
-                return true;
-            }
-        }
-    }
-}
-
-function diagonalCheck2(){
-    for(let col = 0; col < 6; col++){
-        for (let row = 0; row < 5; row++){
-
-            let a = tableRow[row].children[col];
-            let b = tableRow[row+1].children[col+1];
-
-            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor)){
                 return true;
             }
         }
@@ -384,6 +305,51 @@ function diagonalCheck24(){
     }
 }
 
+function horizontalCheck3(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 5; col++){
+        
+            let a = tableRow[row].children[col];
+            let b = tableRow[row].children[col+1];
+            let c = tableRow[row].children[col+2];
+
+            if (connect3Check(a.style.backgroundColor,b.style.backgroundColor, c.style.backgroundColor)){                        
+                return true;
+            }
+        }
+    }
+}
+
+function verticalCheck3(){
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 4; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col];
+            let c = tableRow[row+2].children[col];
+            
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){                    
+                return true;
+            }
+        }   
+    }
+}
+
+function diagonalCheck3(){
+    for(let col = 0; col < 5; col++){
+        for (let row = 0; row < 4; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col+1];
+            let c = tableRow[row+2].children[col+2];
+
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){
+                return true;
+            }
+        }
+    }
+}
+
 function diagonalCheck23(){
     for(let col = 0; col < 5; col++){
         for (let row = 5; row > 1; row--){
@@ -393,6 +359,49 @@ function diagonalCheck23(){
             let c = tableRow[row-2].children[col+2];
 
             if (connect4Check(a.style.backgroundColor, b.style.backgroundColor, c.style.backgroundColor)){
+                return true;
+            }
+        }
+    }
+}
+
+function horizontalCheck2(){
+    for (let row = 0; row < tableRow.length; row++){
+        for (let col =0; col < 6; col++){
+        
+            let a = tableRow[row].children[col];
+            let b = tableRow[row].children[col+1];
+
+            if (connect2Check(a.style.backgroundColor,b.style.backgroundColor)){                        
+                return true;
+            }
+        }
+    }
+}
+
+function verticalCheck2(){
+    for (let col = 0; col < 7; col++){
+        for (let row = 0; row < 5; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col];
+            
+            if (connect2Check(a.style.backgroundColor, b.style.backgroundColor)){                    
+                return true;
+            }
+        }   
+    }
+}
+
+
+function diagonalCheck2(){
+    for(let col = 0; col < 6; col++){
+        for (let row = 0; row < 5; row++){
+
+            let a = tableRow[row].children[col];
+            let b = tableRow[row+1].children[col+1];
+
+            if (connect3Check(a.style.backgroundColor, b.style.backgroundColor)){
                 return true;
             }
         }
@@ -442,4 +451,61 @@ function timer(){
             timer(true);
         }
     },100);
+}
+
+// updates the priority queue after a player has made a turn. 
+function updatePQAfterPlayerTurn(cell){
+    var pqElements = pq.retrieveEntriesAfterTurn(cell);
+
+    pqElements.forEach(qElement => {
+        recalculatePriority(qElement);
+    });
+
+    pq.reset(pqElements);
+}
+
+// recalculates the priority of a given qElement
+function recalculatePriority(qElement){
+    let cell = qElement.element;
+    let value = 0;
+
+    //first check winning move
+    cell.style.backgroundColor = getColor(1);
+    if(checkWon()){
+        value += 600;
+    }
+    else{
+        //if not, then check if it prevents the other player from winning
+        cell.style.backgroundColor = getColor(0);
+        if(checkWon()){
+            value += 500;
+        }
+        else{
+            //if not, then check whether it creates an array of 3, taking into account that the opponent cannot win in the next turn, assign weights for array length (multiplicities) and open spots
+            cell.style.backgroundColor = getColor(1);
+            if(checkConnectsThree()){
+                value += 400;
+            }
+            else{
+                //if not, then check whether it can prevent the opponent from creating an array of three
+                cell.style.backgroundColor = getColor(0);
+                if(checkConnectsThree()){
+                    value += 300;
+                }
+                else{
+                    //if not, then check whether it creates an array of 2, taking into account that the opponent cannot win in the next turn, assign weights for array length and open spots
+                    cell.style.backgroundColor = getColor(1);
+                    if(checkConnectsTwo()){
+                        value += 200;
+                    }
+                    else{
+                        //if not, then it is at most possible to prevent the opponent from creating an array of two, but not important as this will never be the priority.
+                        value += 100;
+                    }
+                }
+            }
+        }
+    }
+    qElement.priority = value;
+    cell.style.backgroundColor = 'white';
 }
